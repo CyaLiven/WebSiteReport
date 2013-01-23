@@ -3,44 +3,25 @@ __author__ = 'aliven.cen'
 
 from flask.ext.admin import expose, AdminIndexView
 from flask.ext.admin.contrib.sqlamodel import ModelView
-from wtforms.fields import SelectField
 from models import User, PVReport
 
-class MyHome(AdminIndexView):
+class MyIndex(AdminIndexView):
     @expose('/')
     def index(self):
-        return self.render('MyView.html')
+        return self.render('MyIndex.html')
 
-status_choices = [(0, 'waiting'), (1, 'in_progress'), (2, 'finished')]
-
-def get_status_choices(context, model, name):
-    status_choices_dict = dict(status_choices)
-    return status_choices_dict.get(model.status, 'error')
-
-class MyView(ModelView):
-    # Disable model creation
+class UserView(ModelView):
     can_create = True
 
-    # Override displayed fields
     column_list = ('username', 'email', 'status')
     column_labels = dict(username=u'用户名', status=u'状态')
-    column_formatters = dict(status=get_status_choices)
-
-    form_overrides = dict(status=SelectField)
-    form_args = dict(
-        # Pass the choices to the `SelectField`
-        status=dict(
-            choices=status_choices,coerce=int
-        ))
 
     def __init__(self, session, **kwargs):
-        # You can pass name and other parameters if you want to
-        super(MyView, self).__init__(User, session, **kwargs)
+        super(UserView, self).__init__(User, session, **kwargs)
 
 class PVReportView(ModelView):
     can_delete = False
 
-    #column_sortable_list = ['record_date', 'abnormal']
     column_labels = dict(
         record_date = u'时间',
         pv_total    = u'pv总数',

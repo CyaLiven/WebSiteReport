@@ -10,6 +10,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '123456790'
 
 # Create in-memory database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://webpy:webpy@localhost/webpy'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://demo:demo@localhost/demo'
 app.config['SQLALCHEMY_ECHO'] = True
-db_sqlite = SQLAlchemy(app)
+db_my = SQLAlchemy(app)
