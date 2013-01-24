@@ -5,6 +5,7 @@ from wtforms.fields import TextField
 from wtforms.widgets.core import TextArea
 
 class TextAreaField(TextField):
+    widget = TextArea()
 
     def __init__(self, width=100, high=100, *args, **kwargs):
         self.width = width
@@ -13,5 +14,5 @@ class TextAreaField(TextField):
 
     def __call__(self, **kwargs):
        kwargs['style'] = 'width: %spx; height: %spx;' %(self.width, self.high)
-       super(TextAreaField, self).__call__(**kwargs)
+       return super(TextAreaField, self).__call__(**kwargs)
 
